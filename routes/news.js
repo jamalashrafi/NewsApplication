@@ -8,7 +8,7 @@ var newsSchema=require('../modules/Schema');
 
 
 /*/*localhost:8080/news*/
-router.get("/view",function(request,response){
+router.get("/view", isLoggedIn ,function(request,response){
 	
 	
 
@@ -38,7 +38,7 @@ router.get("/view",function(request,response){
 
 
 /*localhost:8080/news*/
-router.put("/update",function(request,response){
+router.put("/update", isLoggedIn ,function(request,response){
 	
 	console.log("Inside put");
 	console.log("Inside put"+request.body.stateComment);
@@ -73,7 +73,7 @@ router.put("/update",function(request,response){
 })
 
 /*localhost:8080/news*/
-router.delete("/remove",function(request,response){
+router.delete("/remove", isLoggedIn ,function(request,response){
     
     var modelObj=new newsSchema();
 	console.log("Inside delete function");
@@ -97,7 +97,7 @@ router.delete("/remove",function(request,response){
 })
 
 /*localhost:8080/news*/
-router.post('/', function (req, res) {
+router.post('/', isLoggedIn ,function (req, res) {
 
 	
     console.log("Inside post Im here");
@@ -129,18 +129,28 @@ router.post('/', function (req, res) {
 
     modelObj.save(function (err) {if (err) console.log ('Error on save!')});
 
-    /*modelObjest.find({}).exec(function(err, result) {
+    //modelObjest.find({}).exec(function(err, result) {
       if (!err) {
         console.log(result);
+        res.send("Error occured");
       } else {
-        // error handling
+        res.send("Data saved successfully");
       };
-    });*/
+    });
 
 
-    res.send("Hello from express all");
+    //res.send("Hello from express all");
   //next() // pass control to the next handler
-})
+
+
+function isLoggedIn (req, res, next) {
+if(req.isAuthenticated()){
+return next()
+;}
+else {
+  res.json('not authenticated');
+}
+};
 
 module.exports = router;
 

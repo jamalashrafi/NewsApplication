@@ -1,60 +1,95 @@
+
 var express = require('express');
 var router = express.Router();
-var userss=require('../modules/userAuthentication');
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-// p\POST FOR PASSPORT AUTH
-
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-
-
+var userauthentication = require('../modules/userAuthentication.js');
+var passport=require('passport');
+var LocalStrategy=require('passport-local').Strategy;
+var connectflash=require('connect-flash');
 
 
 
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
-	
-	var name=req.body.Name;
-  var pwd=req.body.Pwd;
-	//console.log(req.body);*/
+router.get('/view', function(req, res, next) {
+  userauthentication.find({},function(err,user){
+    if(err) throw err;
+    return res.redirect('/login');
+  })
 
-	var usersValues=new userss();
+   //console.log("Inside Get");
 
-	
-    console.log("Inside post");
-	
-    /*var jamal = new userss ({
-        username: "jamal",
-        password: "Nabi"
-    });*/
 
-    usersValues.username=name;
-    usersValues.password=pwd;
-
-    console.log(usersValues.username);
-    console.log("Inside Modled"+userss);
-    
-
-    usersValues.save(function (err) {if (err) console.log ('Error on save!')});
-    
-    /*userAuthentication.find({}).exec(function(err, result) {
-      if (!err) {
-        console.log(result);
-      } else {
-        // error handling
-      };
-    });*/
-  res.send('respond with a resource');
+//res.send('respond with a resource');
 });
+
+
+router.post('/login',
+passport.authenticate('local', { sucessRedirect: '/' }),
+function(req, res) {
+res.send("Logged in");
+});
+
+router.get('/logout', function(req, res) {
+ 
+  console.log("Inside logout");
+  req.logout();
+
+  //res.send({redirect: '/users/logout'});
+  res.redirect("/login");
+  //res.send("hi");
+
+  
+//res.send('respond with a resource');
+});
+
+
+
+router.post('/save', function(req, res) {
+
+   console.log("Inside Post");
+   if(req.body)
+   {
+       //console.log("Inside Body");
+       var userdetails = new userauthentication();
+       userdetails.username = req.body.username;
+       userdetails.password = req.body.password;
+       //console.log("UserName"+userdetails.username);
+       userdetails.save(function(err) {
+           if(err)
+           {
+               res.send("Not registered");
+           }
+           else
+           {
+               res.send("Registered")
+           }
+
+       });
+   }
+
+
+});
+
+
+
+/* GET users listing. */
+
+
+router.post('/update', function (req, res) {
+
+  
+    console.log("Inside post Im here");
+  var data= new userauthentication();
+  data.username=req.body.username;
+  data.password=req.body.password;
+
+  console.log(req4);
+
+    modelObj.save(function (err) {if (err) console.log ('Error on save!')});
+
+    res.send("Hello from express all...data saved");
+  //next() // pass control to the next handler
+})
+
 
 module.exports = router;

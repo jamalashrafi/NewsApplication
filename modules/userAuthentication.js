@@ -1,5 +1,5 @@
 var mongoose=require('mongoose');
-var uristring ='mongodb://localhost:27017/test';
+var uristring ='mongodb://localhost/test';
 
 mongoose.connect(uristring, function (err, res) {
       if (err) {
@@ -14,6 +14,6 @@ var schema = new mongoose.Schema({
         username: String,
         password: String
       });
-var userRegister = mongoose.model('jjj', schema);
+var userRegister = mongoose.model('userinfo', schema);
 
-module.exports = userRegister;
+module.exports = userRegister;//db = mongoose.createConnection('mongodb://localhost/mydb');
