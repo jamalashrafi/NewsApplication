@@ -6,7 +6,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
-var {browserHistory,hashHistory, Route, Router, IndexRoute}
+var {hashHistory,browserHistory, Route, Router, IndexRoute}
 
   = require('react-router');
 
@@ -19,11 +19,14 @@ import HomeComponent from './components/HomeComponent.jsx';
 import ContactUs from './components/ContactUs.jsx';
 
 import NavBar from './components/NavBar.jsx';
-
+ 
+import login from './components/login.jsx';
 
 import AboutUs from './components/AboutUs.jsx';
 
 import FavouriteNews from './components/FavouriteNews.jsx';
+
+import Register from './components/Register.jsx';
 
 
 class main extends React.Component{
@@ -54,7 +57,7 @@ ReactDOM.render(
 
                          <Route path="/" components={main} >
                         
-                         <IndexRoute component={ContactUs}/>
+                         <IndexRoute component={login}/>
 
                          <Route path="/about" components={AboutUs}/>
 
@@ -63,6 +66,13 @@ ReactDOM.render(
                          <Route path="/favNews" components={FavouriteNews}/>
 
                          <Route path="/home" components={HomeComponent}/>
+
+                         <Route path="/register" components={Register}/>
+
+                         <Route path="/login" components={login}/>
+
+                         
+
                          </Route>
 
             </Router>,document.getElementById('content')

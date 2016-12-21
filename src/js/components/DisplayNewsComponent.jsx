@@ -14,7 +14,7 @@ export default class DisplayNewsComponent extends React.Component{
 
 		 saveButton(){ /*saveButton starts here*/
 
-		     
+		            console.log("Inside save");
 				    $.ajax({ /*Ajax call function  to  /server/routes/news/save route  starts here*/
 
 						     url: "http://localhost:8080/news/",

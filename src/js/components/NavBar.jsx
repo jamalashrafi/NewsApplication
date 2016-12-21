@@ -23,6 +23,13 @@ export default class NavBar extends React.Component{render() {
 
            <li><Link to="/favNews">Favourites</Link></li>
 
+           <li><Link to="/register">Register</Link></li>
+
+           <li><Link to="/login">Login</Link></li>
+
+           <li><Link to="/users/logout">Logout</Link></li>
+
+
         </ul>
 
       </div>
